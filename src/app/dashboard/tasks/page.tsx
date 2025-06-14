@@ -1,39 +1,35 @@
 "use client"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
-import {
-  CheckCircle,
-  Clock,
-  AlertTriangle,
-  FileText,
-  Calendar,
-  User,
-} from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CheckCircle, Clock, AlertTriangle, FileText, Calendar, User } from "lucide-react"
 
-type BadgeVariant = "default" | "secondary" | "outline" | "destructive"
+type TaskStatus = "pending" | "completed" | "other"
+type TaskPriority = "urgent" | "high" | "medium" | "other"
+
+type Task = {
+  id: number
+  title: string
+  subject: string
+  description: string
+  dueDate: string
+  status: TaskStatus
+  priority: TaskPriority
+  assignedBy: string
+  progress: number
+  files: string[]
+}
 
 export default function TasksPage() {
-  const tasks = [
+  const tasks: Task[] = [
     {
       id: 1,
       title: "Data Structures Assignment",
       subject: "Computer Science",
-      description:
-        "Implement binary search tree with insertion, deletion, and traversal operations.",
+      description: "Implement binary search tree with insertion, deletion, and traversal operations.",
       dueDate: "2024-12-20",
       status: "pending",
       priority: "high",
@@ -45,8 +41,7 @@ export default function TasksPage() {
       id: 2,
       title: "Physics Lab Report",
       subject: "Physics",
-      description:
-        "Write a comprehensive report on the pendulum experiment conducted in class.",
+      description: "Write a comprehensive report on the pendulum experiment conducted in class.",
       dueDate: "2024-12-19",
       status: "pending",
       priority: "urgent",
@@ -70,8 +65,7 @@ export default function TasksPage() {
       id: 4,
       title: "English Essay",
       subject: "English Literature",
-      description:
-        "Write a 1500-word essay on the themes in Shakespeare's Hamlet.",
+      description: "Write a 1500-word essay on the themes in Shakespeare's Hamlet.",
       dueDate: "2024-12-25",
       status: "pending",
       priority: "medium",
@@ -81,7 +75,7 @@ export default function TasksPage() {
     },
   ]
 
-  const getStatusIcon = (status: string) => {
+  const getStatusIcon = (status: TaskStatus) => {
     switch (status) {
       case "completed":
         return <CheckCircle className="h-4 w-4 text-green-500" />
@@ -92,7 +86,7 @@ export default function TasksPage() {
     }
   }
 
-  const getPriorityColor = (priority: string): BadgeVariant => {
+  const getPriorityColor = (priority: TaskPriority) => {
     switch (priority) {
       case "urgent":
         return "destructive"
@@ -115,18 +109,14 @@ export default function TasksPage() {
 
   const pendingTasks = tasks.filter((task) => task.status === "pending")
   const completedTasks = tasks.filter((task) => task.status === "completed")
-  const overdueTasks = tasks.filter(
-    (task) => task.status === "pending" && getDaysUntilDue(task.dueDate) < 0
-  )
+  const overdueTasks = tasks.filter((task) => task.status === "pending" && getDaysUntilDue(task.dueDate) < 0)
 
   return (
     <div className="space-y-6 animate-in fade-in-50 duration-500">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Academic Tasks</h1>
-          <p className="text-muted-foreground">
-            View and manage your department-assigned tasks and related uploads.
-          </p>
+          <p className="text-muted-foreground">View and manage your department-assigned tasks and related uploads.</p>
         </div>
         <Button>
           <FileText className="h-4 w-4 mr-2" />
@@ -134,6 +124,7 @@ export default function TasksPage() {
         </Button>
       </div>
 
+      {/* Task Statistics */}
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -180,6 +171,7 @@ export default function TasksPage() {
         </Card>
       </div>
 
+      {/* Tasks Tabs */}
       <Tabs defaultValue="all" className="space-y-4">
         <TabsList>
           <TabsTrigger value="all">All Tasks</TabsTrigger>
@@ -316,9 +308,7 @@ export default function TasksPage() {
               <CardContent className="text-center py-8">
                 <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold mb-2">No Overdue Tasks!</h3>
-                <p className="text-muted-foreground">
-                  Great job staying on top of your assignments.
-                </p>
+                <p className="text-muted-foreground">Great job staying on top of your assignments.</p>
               </CardContent>
             </Card>
           ) : (
@@ -334,9 +324,7 @@ export default function TasksPage() {
                           <CardDescription>{task.subject}</CardDescription>
                         </div>
                       </div>
-                      <Badge variant="destructive">
-                        {Math.abs(getDaysUntilDue(task.dueDate))} days overdue
-                      </Badge>
+                      <Badge variant="destructive">{Math.abs(getDaysUntilDue(task.dueDate))} days overdue</Badge>
                     </div>
                   </CardHeader>
                 </Card>
