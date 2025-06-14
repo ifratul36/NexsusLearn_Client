@@ -7,24 +7,10 @@ import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CheckCircle, Clock, AlertTriangle, FileText, Calendar, User } from "lucide-react"
 
-type TaskStatus = "pending" | "completed" | "other"
-type TaskPriority = "urgent" | "high" | "medium" | "other"
-
-type Task = {
-  id: number
-  title: string
-  subject: string
-  description: string
-  dueDate: string
-  status: TaskStatus
-  priority: TaskPriority
-  assignedBy: string
-  progress: number
-  files: string[]
-}
+type BadgeVariant = "default" | "destructive" | "secondary" | "outline"
 
 export default function TasksPage() {
-  const tasks: Task[] = [
+  const tasks = [
     {
       id: 1,
       title: "Data Structures Assignment",
@@ -75,7 +61,7 @@ export default function TasksPage() {
     },
   ]
 
-  const getStatusIcon = (status: TaskStatus) => {
+  const getStatusIcon = (status: string) => {
     switch (status) {
       case "completed":
         return <CheckCircle className="h-4 w-4 text-green-500" />
@@ -86,7 +72,7 @@ export default function TasksPage() {
     }
   }
 
-  const getPriorityColor = (priority: TaskPriority) => {
+  const getPriorityColor = (priority: string): BadgeVariant => {
     switch (priority) {
       case "urgent":
         return "destructive"
