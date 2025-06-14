@@ -415,7 +415,7 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label>Activity Status</Label>
-                    <p className="text-sm text-muted-foreground">Show when you're online to others</p>
+                    <p className="text-sm text-muted-foreground">Show when youre online to others</p>
                   </div>
                   <Switch />
                 </div>

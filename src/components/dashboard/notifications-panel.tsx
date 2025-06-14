@@ -1,12 +1,32 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Bell, X } from "lucide-react"
 
+// Define allowed badge variants
+type BadgeVariant = "default" | "secondary" | "destructive" | "outline"
+type NotificationType = "warning" | "info" | "success"
+
+// Define a notification type
+type Notification = {
+  id: number
+  title: string
+  message: string
+  type: NotificationType
+  time: string
+  unread: boolean
+}
+
 export function NotificationsPanel() {
-  const notifications = [
+  const notifications: Notification[] = [
     {
       id: 1,
       title: "Assignment Due Soon",
@@ -33,7 +53,7 @@ export function NotificationsPanel() {
     },
   ]
 
-  const getTypeColor = (type: string) => {
+  const getTypeColor = (type: NotificationType): BadgeVariant => {
     switch (type) {
       case "warning":
         return "destructive"
@@ -57,7 +77,9 @@ export function NotificationsPanel() {
             </CardTitle>
             <CardDescription>Recent updates and alerts</CardDescription>
           </div>
-          <Badge variant="secondary">{notifications.filter((n) => n.unread).length} new</Badge>
+          <Badge variant="secondary">
+            {notifications.filter((n) => n.unread).length} new
+          </Badge>
         </div>
       </CardHeader>
       <CardContent>
@@ -73,14 +95,23 @@ export function NotificationsPanel() {
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center space-x-2">
                     <p className="text-sm font-medium">{notification.title}</p>
-                    {notification.unread && <div className="w-2 h-2 bg-primary rounded-full" />}
+                    {notification.unread && (
+                      <div className="w-2 h-2 bg-primary rounded-full" />
+                    )}
                   </div>
-                  <p className="text-xs text-muted-foreground">{notification.message}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {notification.message}
+                  </p>
                   <div className="flex items-center space-x-2">
-                    <Badge variant={getTypeColor(notification.type) as any} className="text-xs">
+                    <Badge
+                      variant={getTypeColor(notification.type)}
+                      className="text-xs"
+                    >
                       {notification.type}
                     </Badge>
-                    <span className="text-xs text-muted-foreground">{notification.time}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {notification.time}
+                    </span>
                   </div>
                 </div>
                 <Button variant="ghost" size="sm" className="h-6 w-6 p-0">

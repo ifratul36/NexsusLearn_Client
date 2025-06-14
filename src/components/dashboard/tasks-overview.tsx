@@ -1,12 +1,34 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, Clock, AlertCircle, Plus } from "lucide-react"
 
+// Define types for task priority and status
+type TaskStatus = "pending" | "completed" | "overdue"
+type TaskPriority = "urgent" | "high" | "medium" | "low"
+
+// Define allowed badge variants
+type BadgeVariant = "default" | "secondary" | "destructive" | "outline"
+
+// Define a Task type
+interface Task {
+  title: string
+  subject: string
+  dueDate: string
+  status: TaskStatus
+  priority: TaskPriority
+}
+
 export function TasksOverview() {
-  const tasks = [
+  const tasks: Task[] = [
     {
       title: "Data Structures Assignment",
       subject: "Computer Science",
@@ -30,7 +52,7 @@ export function TasksOverview() {
     },
   ]
 
-  const getStatusIcon = (status: string) => {
+  const getStatusIcon = (status: TaskStatus) => {
     switch (status) {
       case "completed":
         return <CheckCircle className="h-4 w-4 text-green-500" />
@@ -41,7 +63,7 @@ export function TasksOverview() {
     }
   }
 
-  const getPriorityColor = (priority: string) => {
+  const getPriorityColor = (priority: TaskPriority): BadgeVariant => {
     switch (priority) {
       case "urgent":
         return "destructive"
@@ -49,6 +71,8 @@ export function TasksOverview() {
         return "default"
       case "medium":
         return "secondary"
+      case "low":
+        return "outline"
       default:
         return "outline"
     }
@@ -81,7 +105,10 @@ export function TasksOverview() {
                 <p className="text-xs text-muted-foreground">{task.subject}</p>
               </div>
               <div className="text-right space-y-1">
-                <Badge variant={getPriorityColor(task.priority) as any} className="text-xs">
+                <Badge
+                  variant={getPriorityColor(task.priority)}
+                  className="text-xs capitalize"
+                >
                   {task.priority}
                 </Badge>
                 <p className="text-xs text-muted-foreground">{task.dueDate}</p>

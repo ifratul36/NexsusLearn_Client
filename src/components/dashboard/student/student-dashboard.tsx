@@ -24,7 +24,7 @@ export function StudentDashboard() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Welcome back, John!</h1>
-          <p className="text-muted-foreground">Here's your academic progress and updates.</p>
+          <p className="text-muted-foreground">Heres your academic progress and updates.</p>
         </div>
         <Badge variant="outline" className="animate-pulse">
           <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>

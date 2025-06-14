@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Calendar, Clock, MapPin, Plus, ChevronLeft, ChevronRight } from "lucide-react"
-import { useState } from "react"
+// import { useState } from "react"
 
 export default function CalendarPage() {
-  const [currentDate, setCurrentDate] = useState(new Date())
+  // const [currentDate, setCurrentDate] = useState(new Date())
 
   const events = [
     {
@@ -169,7 +170,7 @@ export default function CalendarPage() {
         {/* Today's Events */}
         <Card>
           <CardHeader>
-            <CardTitle>Today's Events</CardTitle>
+            <CardTitle>Todays Events</CardTitle>
             <CardDescription>{new Date().toLocaleDateString()}</CardDescription>
           </CardHeader>
           <CardContent>

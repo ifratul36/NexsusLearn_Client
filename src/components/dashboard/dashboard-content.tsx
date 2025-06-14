@@ -4,12 +4,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { StatsCards } from "@/components/dashboard/stats-cards"
 import { RecentActivity } from "@/components/dashboard/recent-activity"
 import { PerformanceChart } from "@/components/dashboard/performance-chart"
 import { TasksOverview } from "@/components/dashboard/tasks-overview"
 import { NotificationsPanel } from "@/components/dashboard/notifications-panel"
 import { QuickActions } from "@/components/dashboard/quick-actions"
+import { StatsCards } from "./stats-card"
 
 export function DashboardContent() {
   return (
@@ -18,7 +18,7 @@ export function DashboardContent() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Welcome back, John!</h1>
-          <p className="text-muted-foreground">Here's what's happening with your academic progress today.</p>
+          <p className="text-muted-foreground">Heres whats happening with your academic progress today.</p>
         </div>
         <div className="flex items-center space-x-2">
           <Badge variant="outline" className="animate-pulse">

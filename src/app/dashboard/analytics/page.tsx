@@ -105,7 +105,7 @@ export default function AnalyticsPage() {
                 <div>
                   <h4 className="text-sm font-medium mb-4">GPA Trend</h4>
                   <div className="space-y-3">
-                    {performanceData.map((data, index) => (
+                    {performanceData.map((data) => (
                       <div key={data.semester} className="flex items-center space-x-4">
                         <div className="w-24 text-sm">{data.semester}</div>
                         <div className="flex-1 bg-muted rounded-full h-3">
@@ -123,7 +123,7 @@ export default function AnalyticsPage() {
                 <div>
                   <h4 className="text-sm font-medium mb-4">Attendance Trend</h4>
                   <div className="space-y-3">
-                    {performanceData.map((data, index) => (
+                    {performanceData.map((data) => (
                       <div key={data.semester} className="flex items-center space-x-4">
                         <div className="w-24 text-sm">{data.semester}</div>
                         <div className="flex-1 bg-muted rounded-full h-3">

@@ -14,7 +14,7 @@ export function GuardianDashboard() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Welcome, Jane!</h1>
-          <p className="text-muted-foreground">Monitor John's academic progress and stay connected.</p>
+          <p className="text-muted-foreground">Monitor Johns academic progress and stay connected.</p>
         </div>
         <div className="flex items-center space-x-2">
           <Badge variant="outline" className="animate-pulse">
@@ -82,7 +82,7 @@ export function GuardianDashboard() {
               <Shield className="h-5 w-5 mr-2" />
               Biometric Access
             </CardTitle>
-            <CardDescription>Access via student's ID card or biometric scan</CardDescription>
+            <CardDescription>Access via students ID card or biometric scan</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -154,7 +154,7 @@ export function GuardianDashboard() {
           <Card>
             <CardHeader>
               <CardTitle>Student Academic Progress</CardTitle>
-              <CardDescription>Comprehensive view of John's academic performance</CardDescription>
+              <CardDescription>Comprehensive view of Johns academic performance</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-3">
@@ -223,7 +223,7 @@ export function GuardianDashboard() {
           <Card>
             <CardHeader>
               <CardTitle>Counseling Access</CardTitle>
-              <CardDescription>Join faculty discussions regarding John's progress</CardDescription>
+              <CardDescription>Join faculty discussions regarding Johns progress</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -270,7 +270,7 @@ export function GuardianDashboard() {
           <Card>
             <CardHeader>
               <CardTitle>Performance Charts</CardTitle>
-              <CardDescription>Track John's academic journey over time</CardDescription>
+              <CardDescription>Track Johns academic journey over time</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid gap-4 md:grid-cols-2">
