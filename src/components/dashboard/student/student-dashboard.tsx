@@ -98,7 +98,7 @@ export function StudentDashboard() {
                 { title: "Assignment Due Tomorrow", type: "urgent", time: "2 hours ago" },
                 { title: "New Course Material Available", type: "info", time: "4 hours ago" },
                 { title: "Counseling Session Scheduled", type: "success", time: "1 day ago" },
-              ].map((notification, index) => (
+              ]?.map((notification, index) => (
                 <div
                   key={index}
                   className="flex items-center space-x-4 p-3 rounded-lg border hover:bg-muted/50 transition-colors"
@@ -192,7 +192,7 @@ export function StudentDashboard() {
                     status: "completed",
                     priority: "medium",
                   },
-                ].map((task, index) => (
+                ]?.map((task, index) => (
                   <div
                     key={index}
                     className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
@@ -276,7 +276,7 @@ export function StudentDashboard() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2">
-                      {["Semester 1", "Semester 2", "Semester 3", "Current"].map((sem, index) => (
+                      {["Semester 1", "Semester 2", "Semester 3", "Current"]?.map((sem, index) => (
                         <div key={sem} className="flex items-center space-x-4">
                           <div className="w-20 text-xs">{sem}</div>
                           <div className="flex-1 bg-muted rounded-full h-2">
@@ -302,7 +302,7 @@ export function StudentDashboard() {
                         { subject: "Mathematics", score: 88 },
                         { subject: "Physics", score: 85 },
                         { subject: "English", score: 90 },
-                      ].map((item) => (
+                      ]?.map((item) => (
                         <div key={item.subject} className="flex items-center space-x-4">
                           <div className="w-24 text-xs">{item.subject}</div>
                           <div className="flex-1 bg-muted rounded-full h-2">
@@ -341,7 +341,7 @@ export function StudentDashboard() {
                         { po: "PO2: Problem Analysis", score: 78 },
                         { po: "PO3: Design Solutions", score: 92 },
                         { po: "PO4: Investigation", score: 88 },
-                      ].map((item) => (
+                      ]?.map((item) => (
                         <div key={item.po} className="space-y-1">
                           <div className="flex justify-between text-sm">
                             <span>{item.po}</span>
@@ -364,7 +364,7 @@ export function StudentDashboard() {
                         { qoo: "Teamwork", score: 91 },
                         { qoo: "Leadership", score: 76 },
                         { qoo: "Ethics", score: 94 },
-                      ].map((item) => (
+                      ]?.map((item) => (
                         <div key={item.qoo} className="space-y-1">
                           <div className="flex justify-between text-sm">
                             <span>{item.qoo}</span>

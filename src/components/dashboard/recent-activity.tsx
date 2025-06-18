@@ -43,7 +43,7 @@ export function RecentActivity() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {activities.map((activity, index) => (
+          {activities?.map((activity, index) => (
             <div key={index} className="flex items-center space-x-4">
               <div className={`p-2 rounded-full bg-muted ${activity.color}`}>
                 <activity.icon className="h-4 w-4" />

@@ -18,7 +18,7 @@ export function PerformanceChart() {
 
       {/* Simple chart representation */}
       <div className="space-y-2">
-        {months.map((month, index) => (
+        {months?.map((month, index) => (
           <div key={month} className="flex items-center space-x-4">
             <div className="w-8 text-xs text-muted-foreground">{month}</div>
             <div className="flex-1 bg-muted rounded-full h-2">

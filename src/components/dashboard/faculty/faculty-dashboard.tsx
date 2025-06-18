@@ -168,7 +168,7 @@ export function FacultyDashboard() {
                     status: "Counseling",
                     gpa: "2.85",
                   },
-                ].map((student, index) => (
+                ]?.map((student, index) => (
                   <div
                     key={index}
                     className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
@@ -312,7 +312,7 @@ export function FacultyDashboard() {
                         { po: "PO2: Problem Analysis", score: 78 },
                         { po: "PO3: Design Solutions", score: 85 },
                         { po: "PO4: Investigation", score: 80 },
-                      ].map((item) => (
+                      ]?.map((item) => (
                         <div key={item.po} className="space-y-1">
                           <div className="flex justify-between text-sm">
                             <span>{item.po}</span>
@@ -335,7 +335,7 @@ export function FacultyDashboard() {
                         { qoo: "Teamwork", score: 89 },
                         { qoo: "Leadership", score: 74 },
                         { qoo: "Ethics", score: 92 },
-                      ].map((item) => (
+                      ]?.map((item) => (
                         <div key={item.qoo} className="space-y-1">
                           <div className="flex justify-between text-sm">
                             <span>{item.qoo}</span>
@@ -364,7 +364,7 @@ export function FacultyDashboard() {
                   { name: "John Doe", id: "CS2021001", gpa: "3.85", attendance: "92%", status: "Excellent" },
                   { name: "Jane Smith", id: "CS2021002", gpa: "3.92", attendance: "95%", status: "Outstanding" },
                   { name: "Mike Johnson", id: "CS2021003", gpa: "2.85", attendance: "78%", status: "Needs Support" },
-                ].map((student, index) => (
+                ]?.map((student, index) => (
                   <div key={index} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
                     <div className="flex items-center justify-between">
                       <div className="space-y-1">
