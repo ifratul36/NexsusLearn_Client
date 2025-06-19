@@ -84,7 +84,7 @@ export function NotificationsPanel() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {notifications.map((notification) => (
+          {notifications?.map((notification) => (
             <div
               key={notification.id}
               className={`p-3 rounded-lg border transition-colors ${

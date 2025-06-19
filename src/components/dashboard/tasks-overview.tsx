@@ -94,7 +94,7 @@ export function TasksOverview() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {tasks.map((task, index) => (
+          {tasks?.map((task, index) => (
             <div
               key={index}
               className="flex items-center space-x-4 p-3 rounded-lg border hover:bg-muted/50 transition-colors"

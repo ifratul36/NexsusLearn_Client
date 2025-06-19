@@ -249,7 +249,7 @@ export function GuardianDashboard() {
                     status: "Completed",
                     summary: "Discussed internship opportunities and career paths in technology.",
                   },
-                ].map((session, index) => (
+                ]?.map((session, index) => (
                   <div key={index} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="font-medium">{session.title}</h4>
@@ -280,7 +280,7 @@ export function GuardianDashboard() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2">
-                      {["Semester 1", "Semester 2", "Semester 3", "Current"].map((sem, index) => (
+                      {["Semester 1", "Semester 2", "Semester 3", "Current"]?.map((sem, index) => (
                         <div key={sem} className="flex items-center space-x-4">
                           <div className="w-20 text-xs">{sem}</div>
                           <div className="flex-1 bg-muted rounded-full h-2">
@@ -306,7 +306,7 @@ export function GuardianDashboard() {
                         { subject: "Mathematics", score: 88 },
                         { subject: "Physics", score: 85 },
                         { subject: "English", score: 90 },
-                      ].map((item) => (
+                      ]?.map((item) => (
                         <div key={item.subject} className="flex items-center space-x-4">
                           <div className="w-24 text-xs">{item.subject}</div>
                           <div className="flex-1 bg-muted rounded-full h-2">
@@ -345,7 +345,7 @@ export function GuardianDashboard() {
                         { po: "PO2: Problem Analysis", score: 78 },
                         { po: "PO3: Design Solutions", score: 92 },
                         { po: "PO4: Investigation", score: 88 },
-                      ].map((item) => (
+                      ]?.map((item) => (
                         <div key={item.po} className="space-y-1">
                           <div className="flex justify-between text-sm">
                             <span>{item.po}</span>
@@ -368,7 +368,7 @@ export function GuardianDashboard() {
                         { qoo: "Teamwork", score: 91 },
                         { qoo: "Leadership", score: 76 },
                         { qoo: "Ethics", score: 94 },
-                      ].map((item) => (
+                      ]?.map((item) => (
                         <div key={item.qoo} className="space-y-1">
                           <div className="flex justify-between text-sm">
                             <span>{item.qoo}</span>

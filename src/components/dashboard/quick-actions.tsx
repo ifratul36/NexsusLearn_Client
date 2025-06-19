@@ -45,7 +45,7 @@ export function QuickActions() {
 
   return (
     <div className="grid grid-cols-2 gap-3">
-      {actions.map((action, index) => (
+      {actions?.map((action, index) => (
         <Button
           key={index}
           variant="outline"
