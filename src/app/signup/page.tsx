@@ -1,9 +1,8 @@
 "use client"
 
-import type React from "react"
-
-import { useState } from "react"
+import React, { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -11,53 +10,64 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Eye, EyeOff, GraduationCap } from "lucide-react"
+import UseAxiosNormal from "@/hook/axiosNormal"
 
 export default function SignUpPage() {
+  const router = useRouter()
+  const axiosInstanceNormal = UseAxiosNormal()
+
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-    userType: "",
-    studentId: "",
-    department: "",
-    semester: "",
-    guardianName: "",
-    guardianPhone: "",
-    agreeToTerms: false,
-  })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    const data = {
+      firstName: formData.get("firstName") as string,
+      lastName: formData.get("lastName") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string,
+      password: formData.get("password") as string,
+      confirmPassword: formData.get("confirmPassword") as string,
+      userType: formData.get("userType") as string,
+      agreeToTerms: formData.get("agreeToTerms") === "on",
+    }
 
-    if (formData.password !== formData.confirmPassword) {
+    if (!data.firstName || !data.lastName || !data.email || !data.password || !data.userType) {
+      alert("Please fill in all required fields.")
+      return
+    }
+
+    if (data.password !== data.confirmPassword) {
       alert("Passwords do not match!")
       return
     }
 
-    if (!formData.agreeToTerms) {
-      alert("Please agree to the terms and conditions!")
-      return
+    
+
+    const userData = {
+      name: data.firstName,
+      // lastName: data.lastName,
+      email: data.email,
+      // phone: data.phone,
+      password: data.password,
+      userType: data.userType,
     }
-
-    console.log("Sign Up Form Data:", formData)
-    // Here you would typically send the data to your registration API
-    alert(`Sign Up Data: ${JSON.stringify(formData, null, 2)}`)
-  }
-
-  const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }))
+    console.log(userData)
+    try {
+      const res = await axiosInstanceNormal.post("/users/signup", userData);
+      console.log(res.data)
+      alert("Account created!")
+      // router.push("/signin")
+    } catch (err) {
+      console.error(err)
+      alert("Sign up failed!")
+    }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen flex items-center justify-center  p-4">
       <Card className="w-full max-w-2xl">
         <CardHeader className="space-y-1 text-center">
           <div className="flex items-center justify-center mb-4">
@@ -68,59 +78,34 @@ export default function SignUpPage() {
           <CardTitle className="text-2xl font-bold">Create Account</CardTitle>
           <CardDescription>Join NexusLearn and start your academic journey</CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit}>
+
+        <form onSubmit={handleSignUp}>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="firstName">First Name</Label>
-                <Input
-                  id="firstName"
-                  placeholder="Enter your first name"
-                  value={formData.firstName}
-                  onChange={(e) => handleInputChange("firstName", e.target.value)}
-                  required
-                />
+                <Input name="firstName" id="firstName" required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="lastName">Last Name</Label>
-                <Input
-                  id="lastName"
-                  placeholder="Enter your last name"
-                  value={formData.lastName}
-                  onChange={(e) => handleInputChange("lastName", e.target.value)}
-                  required
-                />
+                <Input name="lastName" id="lastName" required />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  value={formData.email}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
-                  required
-                />
+                <Input name="email" type="email" id="email" required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number</Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  placeholder="Enter your phone number"
-                  value={formData.phone}
-                  onChange={(e) => handleInputChange("phone", e.target.value)}
-                  required
-                />
+                <Label htmlFor="phone">Phone</Label>
+                <Input name="phone" id="phone" required />
               </div>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="userType">User Type</Label>
-              <Select onValueChange={(value) => handleInputChange("userType", value)} required>
+              <Select name="userType" required>
                 <SelectTrigger>
                   <SelectValue placeholder="Select your role" />
                 </SelectTrigger>
@@ -132,86 +117,14 @@ export default function SignUpPage() {
               </Select>
             </div>
 
-            {formData.userType === "student" && (
-              <>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="studentId">Student ID</Label>
-                    <Input
-                      id="studentId"
-                      placeholder="Enter your student ID"
-                      value={formData.studentId}
-                      onChange={(e) => handleInputChange("studentId", e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="department">Department</Label>
-                    <Select onValueChange={(value) => handleInputChange("department", value)} required>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select department" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="computer-science">Computer Science</SelectItem>
-                        <SelectItem value="electrical">Electrical Engineering</SelectItem>
-                        <SelectItem value="mechanical">Mechanical Engineering</SelectItem>
-                        <SelectItem value="civil">Civil Engineering</SelectItem>
-                        <SelectItem value="business">Business Administration</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="semester">Current Semester</Label>
-                  <Select onValueChange={(value) => handleInputChange("semester", value)} required>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select semester" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {[1, 2, 3, 4, 5, 6, 7, 8].map((sem) => (
-                        <SelectItem key={sem} value={sem.toString()}>
-                          Semester {sem}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="guardianName">Guardian Name</Label>
-                    <Input
-                      id="guardianName"
-                      placeholder="Enter guardian's name"
-                      value={formData.guardianName}
-                      onChange={(e) => handleInputChange("guardianName", e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="guardianPhone">Guardian Phone</Label>
-                    <Input
-                      id="guardianPhone"
-                      type="tel"
-                      placeholder="Enter guardian's phone"
-                      value={formData.guardianPhone}
-                      onChange={(e) => handleInputChange("guardianPhone", e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
-              </>
-            )}
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <div className="relative">
                   <Input
+                    name="password"
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Create a password"
-                    value={formData.password}
-                    onChange={(e) => handleInputChange("password", e.target.value)}
                     required
                   />
                   <Button
@@ -225,15 +138,13 @@ export default function SignUpPage() {
                   </Button>
                 </div>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2 mb-4">
                 <Label htmlFor="confirmPassword">Confirm Password</Label>
                 <div className="relative">
                   <Input
+                    name="confirmPassword"
                     id="confirmPassword"
                     type={showConfirmPassword ? "text" : "password"}
-                    placeholder="Confirm your password"
-                    value={formData.confirmPassword}
-                    onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
                     required
                   />
                   <Button
@@ -249,25 +160,17 @@ export default function SignUpPage() {
               </div>
             </div>
 
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="agreeToTerms"
-                checked={formData.agreeToTerms}
-                onCheckedChange={(checked) => handleInputChange("agreeToTerms", checked as boolean)}
-                required
-              />
+            {/* <div className="flex items-center space-x-2">
+              <Checkbox name="agreeToTerms" id="agreeToTerms" required />
               <Label htmlFor="agreeToTerms" className="text-sm">
                 I agree to the{" "}
-                <Link href="/terms" className="text-primary hover:underline">
-                  Terms and Conditions
-                </Link>{" "}
+                <Link href="/terms" className="text-primary hover:underline">Terms</Link>{" "}
                 and{" "}
-                <Link href="/privacy" className="text-primary hover:underline">
-                  Privacy Policy
-                </Link>
+                <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>
               </Label>
-            </div>
+            </div> */}
           </CardContent>
+
           <CardFooter className="flex flex-col space-y-4">
             <Button type="submit" className="w-full">
               Create Account
