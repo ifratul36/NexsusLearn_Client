@@ -1,14 +1,21 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu, GraduationCap } from "lucide-react"
-import { ModeToggle } from "@/components/mode-toggle"
+import { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { Menu, GraduationCap } from "lucide-react";
+import { ModeToggle } from "@/components/mode-toggle";
+import { motion } from "framer-motion";
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const navigation = [
     { name: "Home", href: "/" },
@@ -16,7 +23,7 @@ export function Navbar() {
     { name: "About Us", href: "/about-us" },
     // { name: "Security", href: "#security" },
     { name: "Contact Us", href: "/contact" },
-  ]
+  ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -41,15 +48,15 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center md:space-x-4">
           <ModeToggle />
           <Link href="/signin" className="flex items-center space-x-2">
-          <Button variant="outline" className="hidden md:inline-flex">
-            Sign In
-          </Button>
+            <Button variant="outline" className="hidden md:inline-flex">
+              Sign In
+            </Button>
           </Link>
           <Link href="/signup" className="flex items-center space-x-2">
-          <Button className="hidden md:inline-flex">Get Started</Button>
+            <Button className="hidden md:inline-flex">Get Started</Button>
           </Link>
 
           {/* Mobile Navigation */}
@@ -60,7 +67,17 @@ export function Navbar() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-80">
-              <div className="flex flex-col space-y-4 mt-8">
+              <SheetHeader>
+                <SheetTitle>Menu</SheetTitle>
+              </SheetHeader>
+
+              {/* Animate menu items */}
+              <motion.div
+                className="flex flex-col space-y-4 mt-4 p-3"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              >
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
@@ -75,11 +92,11 @@ export function Navbar() {
                   <Button variant="outline">Sign In</Button>
                   <Button>Get Started</Button>
                 </div>
-              </div>
+              </motion.div>
             </SheetContent>
           </Sheet>
         </div>
       </div>
     </header>
-  )
+  );
 }

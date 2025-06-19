@@ -1,6 +1,7 @@
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Play, Shield, BarChart3, Users } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ArrowRight, Play, Shield, BarChart3, Users } from "lucide-react";
+import Link from "next/link";
 
 export function Hero() {
   return (
@@ -21,15 +22,18 @@ export function Hero() {
           </h1>
 
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-            Streamline academic communication and monitoring between students, faculty, and guardians with advanced
-            biometric security and real-time analytics.
+            Streamline academic communication and monitoring between students,
+            faculty, and guardians with advanced biometric security and
+            real-time analytics.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button size="lg" className="text-lg px-8">
-              Get Started
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <Link href="/signup" >
+              <Button size="lg" className="text-lg px-8">
+                Get Started
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
             <Button size="lg" variant="outline" className="text-lg px-8">
               <Play className="mr-2 h-5 w-5" />
               Watch Demo
@@ -40,21 +44,27 @@ export function Hero() {
             <div className="flex flex-col items-center p-6 rounded-lg bg-card border">
               <Users className="h-12 w-12 text-primary mb-4" />
               <h3 className="font-semibold mb-2">Multi-User Platform</h3>
-              <p className="text-sm text-muted-foreground text-center">Students, Faculty & Guardians</p>
+              <p className="text-sm text-muted-foreground text-center">
+                Students, Faculty & Guardians
+              </p>
             </div>
             <div className="flex flex-col items-center p-6 rounded-lg bg-card border">
               <Shield className="h-12 w-12 text-primary mb-4" />
               <h3 className="font-semibold mb-2">Biometric Security</h3>
-              <p className="text-sm text-muted-foreground text-center">Fingerprint & Facial Recognition</p>
+              <p className="text-sm text-muted-foreground text-center">
+                Fingerprint & Facial Recognition
+              </p>
             </div>
             <div className="flex flex-col items-center p-6 rounded-lg bg-card border">
               <BarChart3 className="h-12 w-12 text-primary mb-4" />
               <h3 className="font-semibold mb-2">Real-time Analytics</h3>
-              <p className="text-sm text-muted-foreground text-center">Performance Tracking & Insights</p>
+              <p className="text-sm text-muted-foreground text-center">
+                Performance Tracking & Insights
+              </p>
             </div>
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
