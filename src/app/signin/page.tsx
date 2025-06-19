@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
+
 import { Eye, EyeOff, GraduationCap } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { signIn, useSession } from "next-auth/react"
@@ -17,12 +17,12 @@ import UseAxiosNormal from "@/hook/axiosNormal"
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false)
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    userType: "",
-    rememberMe: false,
-  })
+  // const [formData, setFormData] = useState({
+  //   email: "",
+  //   password: "",
+  //   userType: "",
+  //   rememberMe: false,
+  // })
 
   // const handleSubmit = (e: React.FormEvent) => {
   //   e.preventDefault()
@@ -75,8 +75,8 @@ export default function SignInPage() {
       const formData = new FormData(form);
       const email = formData.get('email') as string;
       const password = formData.get('password') as string;
-      const userType = formData.get('userType') as string;
-      const rememberMe = formData.get('rememberMe') === 'on';
+      // const userType = formData.get('userType') as string;
+      // const rememberMe = formData.get('rememberMe') === 'on';
 
       const userInformation={
         email:email,

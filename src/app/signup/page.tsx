@@ -2,18 +2,18 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+// import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
+
 import { Eye, EyeOff, GraduationCap } from "lucide-react"
 import UseAxiosNormal from "@/hook/axiosNormal"
 
 export default function SignUpPage() {
-  const router = useRouter()
+  // const router = useRouter()
   const axiosInstanceNormal = UseAxiosNormal()
 
   const [showPassword, setShowPassword] = useState(false)
