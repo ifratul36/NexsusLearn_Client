@@ -11,11 +11,11 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   const navigation = [
-    { name: "Features", href: "#features" },
-    { name: "Dashboard", href: "#dashboard" },
-    { name: "Analytics", href: "#analytics" },
-    { name: "Security", href: "#security" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/" },
+    { name: "Dashboard", href: "/dashboard" },
+    { name: "About Us", href: "/about-us" },
+    // { name: "Security", href: "#security" },
+    { name: "Contact Us", href: "/contact" },
   ]
 
   return (
@@ -43,10 +43,14 @@ export function Navbar() {
 
         <div className="flex items-center space-x-4">
           <ModeToggle />
+          <Link href="/signin" className="flex items-center space-x-2">
           <Button variant="outline" className="hidden md:inline-flex">
             Sign In
           </Button>
+          </Link>
+          <Link href="/signup" className="flex items-center space-x-2">
           <Button className="hidden md:inline-flex">Get Started</Button>
+          </Link>
 
           {/* Mobile Navigation */}
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
