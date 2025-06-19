@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,6 +11,9 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Eye, EyeOff, GraduationCap } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { signIn, useSession } from "next-auth/react"
+import UseAxiosNormal from "@/hook/axiosNormal"
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -21,22 +24,84 @@ export default function SignInPage() {
     rememberMe: false,
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Sign In Form Data:", formData)
-    // Here you would typically send the data to your authentication API
-    alert(`Sign In Data: ${JSON.stringify(formData, null, 2)}`)
-  }
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault()
+  //   console.log("Sign In Form Data:", formData)
+  //   // Here you would typically send the data to your authentication API
+  //   alert(`Sign In Data: ${JSON.stringify(formData, null, 2)}`)
+  // }
 
-  const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }))
-  }
+  // const handleInputChange = (field: string, value: string | boolean) => {
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [field]: value,
+  //   }))
+  // }
+  const router =useRouter();
+  const {data,status}=useSession()
+  const axiosInstanceNormal=UseAxiosNormal();
+  useEffect(()=>{
+     const storeUserInfo = async () => {
+      if (data?.user) {
+        try {
+          //console.log("User data from data?.user:", data.user);
+          const userInfo = {
+            username: data.user.name,
+            email: data.user.email,
+            picture: data.user.image,
+          };
+          const response = await axiosInstanceNormal.post(
+            "/signup",
+            userInfo
+          );
+          console.log("User info stored:", response.data);
+          router.push("/");
+        } catch (error) {
+          console.error("Error storing user info:", error);
+        }
+      }
+    };
 
+    if (status === "authenticated") {
+      storeUserInfo();
+    }
+  }, [data, status, router, axiosInstanceNormal])
+
+  const handleSignInByEmail= async (e:React.MouseEvent<HTMLButtonElement>)=>{
+    e.preventDefault();
+    
+    const form =(e.target as HTMLButtonElement).closest('form');
+    if(form){
+      const formData = new FormData(form);
+      const email = formData.get('email') as string;
+      const password = formData.get('password') as string;
+      const userType = formData.get('userType') as string;
+      const rememberMe = formData.get('rememberMe') === 'on';
+
+      const userInformation={
+        email:email,
+        password:password,
+        lastLoginTime:new Date().toISOString()
+      }
+      console.log(userInformation)
+      try{
+        const response=await axiosInstanceNormal.post(`/users/signin/${email}`,userInformation);
+        console.log(response.data);
+        const userInfo=response.data.userInfo;
+        await signIn('credentials',{
+          email:userInfo.email,
+          password:userInfo.password,
+          redirect:false,
+        });
+
+      }
+      catch(error){
+        console.log("error signing in:",error)
+      }
+    }
+  }
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1 text-center">
           <div className="flex items-center justify-center mb-4">
@@ -47,16 +112,15 @@ export default function SignInPage() {
           <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
           <CardDescription>Sign in to your NexusLearn account</CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit}>
+        <form>
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
+                name="email"
                 type="email"
                 placeholder="Enter your email"
-                value={formData.email}
-                onChange={(e) => handleInputChange("email", e.target.value)}
                 required
               />
             </div>
@@ -65,10 +129,9 @@ export default function SignInPage() {
               <div className="relative">
                 <Input
                   id="password"
+                  name="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
-                  value={formData.password}
-                  onChange={(e) => handleInputChange("password", e.target.value)}
                   required
                 />
                 <Button
@@ -84,7 +147,7 @@ export default function SignInPage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="userType">User Type</Label>
-              <Select onValueChange={(value) => handleInputChange("userType", value)} required>
+              <Select required>
                 <SelectTrigger>
                   <SelectValue placeholder="Select your role" />
                 </SelectTrigger>
@@ -96,7 +159,7 @@ export default function SignInPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex items-center space-x-2">
+            {/* <div className="flex items-center space-x-2">
               <Checkbox
                 id="rememberMe"
                 checked={formData.rememberMe}
@@ -105,10 +168,10 @@ export default function SignInPage() {
               <Label htmlFor="rememberMe" className="text-sm">
                 Remember me
               </Label>
-            </div>
+            </div> */}
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
-            <Button type="submit" className="w-full">
+            <Button onClick={handleSignInByEmail} type="submit" className="w-full">
               Sign In
             </Button>
             <div className="text-center text-sm">
