@@ -40,32 +40,32 @@ export default function SignInPage() {
   const {data,status}=useSession();
   console.log("Session status:", status);
   const axiosInstanceNormal=UseAxiosNormal();
-  useEffect(()=>{
-     const storeUserInfo = async () => {
-      if (data?.user) {
-        try {
-          //console.log("User data from data?.user:", data.user);
-          const userInfo = {
-            username: data.user.name,
-            email: data.user.email,
-            picture: data.user.image,
-          };
-          const response = await axiosInstanceNormal.post(
-            "/users/signup",
-            userInfo
-          );
-          console.log("User info stored:", response.data);
-          router.push("/");
-        } catch (error) {
-          console.error("Error storing user info:", error);
-        }
-      }
-    };
+  // useEffect(()=>{
+  //    const storeUserInfo = async () => {
+  //     if (data?.user) {
+  //       try {
+  //         //console.log("User data from data?.user:", data.user);
+  //         const userInfo = {
+  //           username: data.user.name,
+  //           email: data.user.email,
+  //           picture: data.user.image,
+  //         };
+  //         const response = await axiosInstanceNormal.post(
+  //           "/users/signup",
+  //           userInfo
+  //         );
+  //         console.log("User info stored:", response.data);
+  //         router.push("/");
+  //       } catch (error) {
+  //         console.error("Error storing user info:", error);
+  //       }
+  //     }
+  //   };
 
-    if (status === "authenticated") {
-      storeUserInfo();
-    }
-  }, [data, status, router, axiosInstanceNormal])
+  //   if (status === "authenticated") {
+  //     storeUserInfo();
+  //   }
+  // }, [data, status, router, axiosInstanceNormal])
 
   const handleSignInByEmail= async (e:React.MouseEvent<HTMLButtonElement>)=>{
     e.preventDefault();
@@ -78,12 +78,12 @@ export default function SignInPage() {
       // const userType = formData.get('userType') as string;
       // const rememberMe = formData.get('rememberMe') === 'on';
 
-      const userInformation={
-        email:email,
-        password:password,
-        lastLoginTime:new Date().toISOString()
-      }
-      console.log(userInformation)
+      // const userInformation={
+      //   email:email,
+      //   password:password,
+      //   lastLoginTime:new Date().toISOString()
+      // }
+      // console.log(userInformation)
       try{
         // const response=await axiosInstanceNormal.post(`/users/signin/${email}`,userInformation);
         // console.log(response.data);
