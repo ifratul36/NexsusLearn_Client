@@ -5,7 +5,9 @@ import { Analytics } from "@/components/analytics"
 import { Security } from "@/components/security"
 import { CTA } from "@/components/cta"
 
+
 export default function HomePage() {
+
   return (
     <main className="min-h-screen">
       <Hero />

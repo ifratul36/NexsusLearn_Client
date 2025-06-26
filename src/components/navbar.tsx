@@ -13,10 +13,12 @@ import {
 import { Menu, GraduationCap } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
 import { motion } from "framer-motion";
+import { useSession } from "next-auth/react";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { data: session } = useSession()
+  console.log("Session data from home:", session)
   const navigation = [
     { name: "Home", href: "/" },
     { name: "Dashboard", href: "/dashboard" },
