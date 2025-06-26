@@ -5,8 +5,11 @@ import { StudentDashboard } from "@/components/dashboard/student/student-dashboa
 import { FacultyDashboard } from "@/components/dashboard/faculty/faculty-dashboard"
 import { GuardianDashboard } from "@/components/dashboard/guardian/guardian-dashboard"
 import { AdminDashboard } from "@/components/dashboard/admin/admin-dashboard"
+import { useSession } from "next-auth/react"
 
 export default function DashboardPage() {
+  const {data}=useSession()
+  console.log(data,'session in dashboard')
   const { userRole } = useUserRole()
 
   switch (userRole) {

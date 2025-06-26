@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -12,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 import { Eye, EyeOff, GraduationCap } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { signIn, useSession } from "next-auth/react"
+import {  signIn, useSession } from "next-auth/react"
 import UseAxiosNormal from "@/hook/axiosNormal"
 
 export default function SignInPage() {
@@ -38,7 +37,8 @@ export default function SignInPage() {
   //   }))
   // }
   const router =useRouter();
-  const {data,status}=useSession()
+  const {data,status}=useSession();
+  console.log("Session status:", status);
   const axiosInstanceNormal=UseAxiosNormal();
   useEffect(()=>{
      const storeUserInfo = async () => {
@@ -51,7 +51,7 @@ export default function SignInPage() {
             picture: data.user.image,
           };
           const response = await axiosInstanceNormal.post(
-            "/signup",
+            "/users/signup",
             userInfo
           );
           console.log("User info stored:", response.data);
@@ -85,14 +85,15 @@ export default function SignInPage() {
       }
       console.log(userInformation)
       try{
-        const response=await axiosInstanceNormal.post(`/users/signin/${email}`,userInformation);
-        console.log(response.data);
-        const userInfo=response.data.userInfo;
+        // const response=await axiosInstanceNormal.post(`/users/signin/${email}`,userInformation);
+        // console.log(response.data);
+        // const userInfo=response.data.userInfo;
         await signIn('credentials',{
-          email:userInfo.email,
-          password:userInfo.password,
+          email:email,
+          password:password,
           redirect:false,
         });
+        router.push("/");
 
       }
       catch(error){
@@ -100,6 +101,7 @@ export default function SignInPage() {
       }
     }
   }
+  console.log("Session data:", data);
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-md">

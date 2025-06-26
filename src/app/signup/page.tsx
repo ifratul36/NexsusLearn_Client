@@ -2,39 +2,50 @@
 
 import React, { useState } from "react"
 import Link from "next/link"
-// import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select"
 import { Eye, EyeOff, GraduationCap } from "lucide-react"
 import UseAxiosNormal from "@/hook/axiosNormal"
 
 export default function SignUpPage() {
-  // const router = useRouter()
   const axiosInstanceNormal = UseAxiosNormal()
 
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [role, setrole] = useState("student")
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const form = e.currentTarget
     const formData = new FormData(form)
     const data = {
-      firstName: formData.get("firstName") as string,
-      lastName: formData.get("lastName") as string,
+      name: formData.get("name") as string,
       email: formData.get("email") as string,
-      phone: formData.get("phone") as string,
       password: formData.get("password") as string,
       confirmPassword: formData.get("confirmPassword") as string,
-      userType: formData.get("userType") as string,
-      agreeToTerms: formData.get("agreeToTerms") === "on",
+      role: formData.get("role") as string,
+      semester: formData.get("semester") as string,
+      department: formData.get("department") as string,
+      subject: formData.get("subject") as string,
     }
-
-    if (!data.firstName || !data.lastName || !data.email || !data.password || !data.userType) {
+    console.log("Sign Up Data:", JSON.stringify(data, null, 2))
+    if (!data.name || !data.email || !data.password || !data.role) {
       alert("Please fill in all required fields.")
       return
     }
@@ -44,19 +55,27 @@ export default function SignUpPage() {
       return
     }
 
-    
-
-    const userData = {
-      name: data.firstName,
-      // lastName: data.lastName,
+    const userData: Record<string, any> = {
+      name: data.name,
       email: data.email,
-      // phone: data.phone,
       password: data.password,
-      userType: data.userType,
+      role: data.role,
     }
-    console.log(userData)
+
+    if (data.role === "student") {
+      userData.studentInfo = {
+        semester: data.semester,
+        department: data.department
+      }
+    }
+    if( data.role === "faculty") {
+      userData.facultyInfo={
+        subject : data.subject
+      }
+    }
+    console.log("User Data to Send:", JSON.stringify(userData, null, 2))
     try {
-      const res = await axiosInstanceNormal.post("/users/signup", userData);
+      const res = await axiosInstanceNormal.post("/users/signup", userData)
       console.log(res.data)
       alert("Account created!")
       // router.push("/signin")
@@ -67,7 +86,7 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center  p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-2xl">
         <CardHeader className="space-y-1 text-center">
           <div className="flex items-center justify-center mb-4">
@@ -83,12 +102,8 @@ export default function SignUpPage() {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="firstName">First Name</Label>
-                <Input name="firstName" id="firstName" required />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="lastName">Last Name</Label>
-                <Input name="lastName" id="lastName" required />
+                <Label htmlFor="name">First Name</Label>
+                <Input name="name" id="name" required />
               </div>
             </div>
 
@@ -104,8 +119,8 @@ export default function SignUpPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="userType">User Type</Label>
-              <Select name="userType" required>
+              <Label htmlFor="role">User Type</Label>
+              <Select name="role" value={role} onValueChange={setrole} required>
                 <SelectTrigger>
                   <SelectValue placeholder="Select your role" />
                 </SelectTrigger>
@@ -117,6 +132,24 @@ export default function SignUpPage() {
               </Select>
             </div>
 
+            {role === "student" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="semester">Semester</Label>
+                  <Input name="semester" id="semester" placeholder="e.g. 4th" required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="department">Department</Label>
+                  <Input name="department" id="department" placeholder="e.g. CSE" required />
+                </div>
+              </div>
+            )}
+            {role === "faculty" && (
+              <div className="space-y-2">
+                <Label htmlFor="subject">Subject</Label>
+                <Input name="subject" id="subject" placeholder="e.g. Mathematics" required />
+              </div>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
@@ -159,16 +192,6 @@ export default function SignUpPage() {
                 </div>
               </div>
             </div>
-
-            {/* <div className="flex items-center space-x-2">
-              <Checkbox name="agreeToTerms" id="agreeToTerms" required />
-              <Label htmlFor="agreeToTerms" className="text-sm">
-                I agree to the{" "}
-                <Link href="/terms" className="text-primary hover:underline">Terms</Link>{" "}
-                and{" "}
-                <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>
-              </Label>
-            </div> */}
           </CardContent>
 
           <CardFooter className="flex flex-col space-y-4">
