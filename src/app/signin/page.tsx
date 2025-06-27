@@ -126,7 +126,7 @@ export default function SignInPage() {
                 required
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2 mb-4">
               <Label htmlFor="password">Password</Label>
               <div className="relative">
                 <Input
@@ -147,7 +147,7 @@ export default function SignInPage() {
                 </Button>
               </div>
             </div>
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <Label htmlFor="userType">User Type</Label>
               <Select required>
                 <SelectTrigger>
@@ -160,7 +160,7 @@ export default function SignInPage() {
                   <SelectItem value="admin">Administrator</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
             {/* <div className="flex items-center space-x-2">
               <Checkbox
                 id="rememberMe"

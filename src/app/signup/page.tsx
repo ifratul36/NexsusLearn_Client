@@ -112,7 +112,7 @@ export default function SignUpPage() {
 
         <form onSubmit={handleSignUp}>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
               <div className="space-y-2">
                 <Label htmlFor="name">First Name</Label>
                 <Input name="name" id="name" required />
@@ -132,8 +132,8 @@ export default function SignUpPage() {
 
             <div className="space-y-2">
               <Label htmlFor="role">User Type</Label>
-              <Select name="role" value={role} onValueChange={setrole} required>
-                <SelectTrigger>
+              <Select name="role" value={role} onValueChange={setrole}  required>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select your role" />
                 </SelectTrigger>
                 <SelectContent>

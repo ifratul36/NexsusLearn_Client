@@ -22,6 +22,6 @@ export default function DashboardPage() {
     case "admin":
       return <AdminDashboard />
     default:
-      return <StudentDashboard />
+      return <FacultyDashboard />
   }
 }
