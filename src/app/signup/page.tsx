@@ -22,7 +22,19 @@ import {
 } from "@/components/ui/select"
 import { Eye, EyeOff, GraduationCap } from "lucide-react"
 import UseAxiosNormal from "@/hook/axiosNormal"
-
+type UserData = {
+  name: string
+  email: string
+  password: string
+  role: string
+  studentInfo?: {
+    semester: string
+    department: string
+  }
+  facultyInfo?: {
+    subject: string
+  }
+}
 export default function SignUpPage() {
   const axiosInstanceNormal = UseAxiosNormal()
 
@@ -55,7 +67,7 @@ export default function SignUpPage() {
       return
     }
 
-    const userData: Record<string, any> = {
+    const userData: UserData = {
       name: data.name,
       email: data.email,
       password: data.password,
