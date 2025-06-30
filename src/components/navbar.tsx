@@ -38,7 +38,7 @@ export function Navbar() {
         </Link>
 
         {/* Right Side */}
-        <div className="flex items-center space-x-6">
+        <div className="flex items-center md:space-x-6 space-x-2">
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
             {navigation.map((item) => (
